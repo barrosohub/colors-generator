@@ -1,5 +1,5 @@
 # Colors Generator
-This project generate random colors. He has support "copy to clipboard".
+This project generate random colors. He has support to "copy to clipboard".
 
 Look the live project:
 https://colors-generator.pages.dev
