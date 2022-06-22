@@ -1,4 +1,5 @@
 import './index.css';
+import ReactDOM from 'react-dom';
 
 ReactDOM.render(
   <React.StrictMode>
