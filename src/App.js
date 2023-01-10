@@ -10,7 +10,7 @@ const App = () => {
   }, [color]);
 
   const generateColor = () => {
-    let color = ((Math.random() * 0xffffff) << 0).toString(16);
+    const color = ((Math.random() * 0xffffff) << 0).toString(16);
     document.body.style.backgroundColor = "#" + color;
     setColor("#" + color);
     setMsg(`Generated color: ${color}`);
