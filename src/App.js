@@ -2,32 +2,38 @@ import "./App.css";
 import { useEffect, useState } from "react";
 
 const App = () => {
-  useEffect(() => {
-    document.title = useColor;
-  });
+  const [color, setColor] = useState("#fff");
+  const [msg, setMsg] = useState("");
 
-  const [useColor, setColor] = useState("#fff");
-  const [useMsg, setMsg] = useState("");
+  useEffect(() => {
+    document.title = color;
+  }, [color]);
 
   const generateColor = () => {
-    const body = document.querySelector("body");
-    let color = Math.floor(Math.random() * 16777215).toString(16);
-    body.style.backgroundColor = "#" + color;
-    setColor(body.style.backgroundColor.toString());
-    setMsg("Generated color: " + body.style.backgroundColor.toString());
+    let color = ((Math.random() * 0xffffff) << 0).toString(16);
+    document.body.style.backgroundColor = "#" + color;
+    setColor("#" + color);
+    setMsg(`Generated color: ${color}`);
   };
 
-  const copyColor = () => {
-    navigator.clipboard.writeText(useColor);
-    setMsg(useColor + " copied to clipboard!");
+  const copyColor = async () => {
+    try {
+      await navigator.clipboard.writeText(color);
+      setMsg(`${color} copied to clipboard!`);
+    } catch (err) {
+      console.error("Failed to copy text: ", err);
+    }
   };
+
+  const clearTimeoutIdRef = useRef(null);
 
   useEffect(() => {
-    let eventClearMsg = setTimeout(() => {
-      setMsg("");
-    }, 3000);
-    return () => clearTimeout(eventClearMsg);
-  }, [useMsg]);
+      clearTimeoutIdRef.current = setTimeout(() => {
+          setMsg("");
+      }, 3000);
+
+      return () => clearTimeout(clearTimeoutIdRef.current);
+  }, []);
 
   return (
     <div className="container">
@@ -35,9 +41,9 @@ const App = () => {
         <strong>Generate Color</strong>
       </button>
       <button onClick={copyColor}>
-        Copy <strong>{useColor}</strong> to clipboard
+        Copy <strong>{color}</strong> to clipboard
       </button>
-      <p className="msg">{useMsg}</p>
+      <p className="msg">{msg}</p>
     </div>
   );
 };
