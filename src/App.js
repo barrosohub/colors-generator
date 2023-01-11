@@ -1,5 +1,5 @@
 import "./App.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 const App = () => {
   const [color, setColor] = useState("#fff");
@@ -28,11 +28,11 @@ const App = () => {
   const clearTimeoutIdRef = useRef(null);
 
   useEffect(() => {
-      clearTimeoutIdRef.current = setTimeout(() => {
-          setMsg("");
-      }, 3000);
+    clearTimeoutIdRef.current = setTimeout(() => {
+      setMsg("");
+    }, 3000);
 
-      return () => clearTimeout(clearTimeoutIdRef.current);
+    return () => clearTimeout(clearTimeoutIdRef.current);
   }, []);
 
   return (
